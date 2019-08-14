@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <adminhtml_feedbackreviews_index>
+        <reference name="head">
+            <action method="addCss"><name>magmodules/feedbackcompany/grid.css</name></action>
+        </reference>
+        <reference name="content">
+            <block type="feedbackcompany/adminhtml_feedbackreviews" name="feedbackcompany" />
+        </reference>
+    </adminhtml_feedbackreviews_index>
+    <adminhtml_feedbacklog_index>
+        <reference name="content">
+            <block type="feedbackcompany/adminhtml_feedbacklog" name="feedbacklog" />
+        </reference>
+    </adminhtml_feedbacklog_index>
+</layout>

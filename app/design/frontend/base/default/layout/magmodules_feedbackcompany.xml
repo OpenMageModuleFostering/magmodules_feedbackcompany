@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+	<default>
+		<reference name="head">
+			<action method="addCss" ifconfig="feedbackcompany/general/enabled"><stylesheet>magmodules/feedbackcompany/sidebar.css</stylesheet></action>
+		</reference>
+		<reference name="left">
+			<block type="feedbackcompany/sidebar" name="left.feedbackcompany" template="magmodules/feedbackcompany/sidebar/left.phtml" />
+		</reference>
+		<reference name="right">
+			<block type="feedbackcompany/sidebar" name="right.feedbackcompany" template="magmodules/feedbackcompany/sidebar/right.phtml" />
+		</reference>
+		<reference name="header">
+			<block type="feedbackcompany/header" name="header.feedbackcompany" as="topFeedbackcompany" />
+		</reference>
+	</default>
+	<feedbackcompany_index_index>
+		<reference name="root">
+			<action method="setTemplate"><template>page/2columns-left.phtml</template></action>
+		</reference>
+		<reference name="head">
+			<action method="addCss"><stylesheet>magmodules/feedbackcompany/style.css</stylesheet></action>
+			<action method="addCss"><stylesheet>magmodules/feedbackcompany/glyphicons-free.css</stylesheet></action>
+		</reference>
+		<reference name="content">
+			<block type="feedbackcompany/reviews" name="feedbackcompany.index" template="magmodules/feedbackcompany/index.phtml" />
+		</reference>
+		<reference name="left">
+			<remove name="left.feedbackcompany" />
+		</reference>
+		<reference name="right">
+			<remove name="right.feedbackcompany" />
+		</reference>
+	</feedbackcompany_index_index>
+</layout> 
