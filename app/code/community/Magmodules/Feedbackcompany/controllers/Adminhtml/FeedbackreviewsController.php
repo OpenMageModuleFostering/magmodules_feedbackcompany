@@ -42,7 +42,7 @@ class Magmodules_Feedbackcompany_Adminhtml_FeedbackreviewsController extends Mag
 			$result = Mage::getModel('feedbackcompany/api')->processFeed($storeid, 'all');		
 			$log = Mage::getModel('feedbackcompany/log')->addToLog('reviews', $storeid, $result, '', (microtime(true) - $start_time), '', '');
 
-			if(($result['review_new'] > 0) || ($result['review_updates'] > 0) || ($result['stats'] == true)) {
+			if(($result['review_new'] > 0) || ($result['review_updates'] > 0) || ($result['stats']['status'] == 'success')) {
 				$msg = Mage::helper('feedbackcompany')->__('Webwinkel ID %s:', $api_id) . ' '; 
 				$msg .= Mage::helper('feedbackcompany')->__('%s new review(s)', $result['review_new']) . ', '; 
 				$msg .= Mage::helper('feedbackcompany')->__('%s review(s) updated', $result['review_updates']) . ' & '; 
@@ -52,7 +52,11 @@ class Magmodules_Feedbackcompany_Adminhtml_FeedbackreviewsController extends Mag
 			if($msg) {
 				Mage::getSingleton('adminhtml/session')->addSuccess($msg);
 			} else {
-				Mage::getSingleton('adminhtml/session')->addError(Mage::helper('feedbackcompany')->__('Webwinkel ID %s: no updates found, feed is empty or not found!', $api_id));
+				if(!empty($result['stats']['msg'])) {
+					Mage::getSingleton('adminhtml/session')->addError(Mage::helper('feedbackcompany')->__('Webwinkel ID %s: %s', $api_id, $result['stats']['msg']));				
+				} else {
+					Mage::getSingleton('adminhtml/session')->addError(Mage::helper('feedbackcompany')->__('Webwinkel ID %s: no updates found, feed is empty or not found!', $api_id));
+				}					
 			}
 		}
 		Mage::getModel('feedbackcompany/stats')->processOverall();

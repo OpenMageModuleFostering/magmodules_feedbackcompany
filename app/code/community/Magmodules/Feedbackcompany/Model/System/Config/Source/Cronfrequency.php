@@ -24,14 +24,13 @@ class Magmodules_Feedbackcompany_Model_System_Config_Source_Cronfrequency {
 	public function toOptionArray() 
 	{
 		return array(
-			'*/15 * * * *'		=> Mage::helper('feedbackcompany')->__('Every 15 minutes'),
-			'0 * * * *'			=> Mage::helper('feedbackcompany')->__('Every Hour'),
-			'0 */2 * * *'		=> Mage::helper('feedbackcompany')->__('Every other Hour'),
-			'0 8,20 * * *'		=> Mage::helper('feedbackcompany')->__('Twice a Day'),
-			'0 2 * * *'			=> Mage::helper('feedbackcompany')->__('Once a Day'),
-			'0 2 * * 0'			=> Mage::helper('feedbackcompany')->__('Once a Week'),
-			'0 2 1 * *'			=> Mage::helper('feedbackcompany')->__('Once a Month'),
-			''					=> Mage::helper('feedbackcompany')->__('Never'),
+			'0 * * * *'	=> Mage::helper('feedbackcompany')->__('Every Hour'),
+			'0 */2 * * *' => Mage::helper('feedbackcompany')->__('Every other Hour'),
+			'0 8,20 * * *' => Mage::helper('feedbackcompany')->__('Twice a Day'),
+			'0 2 * * *'	=> Mage::helper('feedbackcompany')->__('Once a Day'),
+			'0 2 * * 0'	 => Mage::helper('feedbackcompany')->__('Once a Week'),
+			'0 2 1 * *'	=> Mage::helper('feedbackcompany')->__('Once a Month'),
+			''	=> Mage::helper('feedbackcompany')->__('Never'),
 		);
 	}
 

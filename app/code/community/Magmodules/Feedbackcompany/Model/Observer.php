@@ -42,7 +42,6 @@ class Magmodules_Feedbackcompany_Model_Observer {
 	public function processReviews() 
 	{
 		$storeids = Mage::getModel('feedbackcompany/api')->getStoreIds();
-		$qty = 0;
 		foreach($storeids as $storeid)  {
 			$enabled = Mage::getStoreConfig('feedbackcompany/general/enabled', $storeid);
 			$cron_enabled = Mage::getStoreConfig('feedbackcompany/reviews/cron', $storeid);
@@ -53,18 +52,13 @@ class Magmodules_Feedbackcompany_Model_Observer {
 				$results = Mage::getModel('feedbackcompany/reviews')->processFeed($feed, $storeid, $crontype);
 				$results['stats'] = Mage::getModel('feedbackcompany/stats')->processFeed($feed, $storeid);
 				$log = Mage::getModel('feedbackcompany/log')->addToLog('reviews', $storeid, $results, '', (microtime(true) - $start_time), $crontype);
-				$qty++;
 			}
 		}
-		if($qty > 0) {
-			Mage::getModel('feedbackcompany/reviews')->flushCache();		
-		}	
 	}
 
 	public function processProductreviews() 
 	{
 		$storeids = Mage::getModel('feedbackcompany/api')->getStoreIds();
-		$qty = 0;
 		foreach($storeids as $storeid)  {
 			$enabled = Mage::getStoreConfig('feedbackcompany/general/enabled', $storeid);
 			$reviews_enabled = Mage::getStoreConfig('feedbackcompany/productreviews/enabled', $storeid);
@@ -86,7 +80,6 @@ class Magmodules_Feedbackcompany_Model_Observer {
 	public function processHistory() 
 	{
 		$storeids = Mage::getModel('feedbackcompany/api')->getStoreIds();
-		$qty = 0;
 		foreach($storeids as $storeid)  {
 			$enabled = Mage::getStoreConfig('feedbackcompany/general/enabled', $storeid);
 			$cron_enabled = Mage::getStoreConfig('feedbackcompany/reviews/cron', $storeid);
@@ -97,12 +90,8 @@ class Magmodules_Feedbackcompany_Model_Observer {
 				$results = Mage::getModel('feedbackcompany/reviews')->processFeed($feed, $storeid, $crontype);
 				$results['stats'] = Mage::getModel('feedbackcompany/stats')->processFeed($feed, $storeid);
 				$log = Mage::getModel('feedbackcompany/log')->addToLog('reviews', $storeid, $results, '', (microtime(true) - $start_time), $crontype);
-				$qty++;
 			}
-		}
-		if($qty > 0) {
-			Mage::getModel('feedbackcompany/reviews')->flushCache();		
-		}		
+		}	
 	}
 
 	public function cleanLog() 
@@ -123,41 +112,40 @@ class Magmodules_Feedbackcompany_Model_Observer {
     {
 		$shipment = $observer->getEvent()->getShipment();
 		$order = $shipment->getOrder();
-		if((Mage::getStoreConfig('feedbackcompany/invitation/enabled', $order->getStoreId())) && (Mage::getStoreConfig('feedbackcompany/invitation/connector', $order->getStoreId()))):
-			if($order->getStatus() == Mage::getStoreConfig('feedbackcompany/invitation/status', $order->getStoreId())):
-				if(!$order->getFeedbackSent()):
-					if(Mage::getStoreConfig('feedbackcompany/invitation/backlog', $order->getStoreId()) > 0):
+		if((Mage::getStoreConfig('feedbackcompany/invitation/enabled', $order->getStoreId())) && (Mage::getStoreConfig('feedbackcompany/invitation/connector', $order->getStoreId()))) {
+			if($order->getStatus() == Mage::getStoreConfig('feedbackcompany/invitation/status', $order->getStoreId())) {
+				if(!$order->getFeedbackSent()) {
+					if(Mage::getStoreConfig('feedbackcompany/invitation/backlog', $order->getStoreId()) > 0) {
 						$date_diff = floor(time() - strtotime($order->getCreatedAt()))/(60*60*24);
-						if($date_diff < Mage::getStoreConfig('feedbackcompany/invitation/backlog', $order->getStoreId())):
+						if($date_diff < Mage::getStoreConfig('feedbackcompany/invitation/backlog', $order->getStoreId())) {
 							Mage::getModel('feedbackcompany/api')->sendInvitation($order);
-						endif;
-					else:
+						}
+					} else {
 						Mage::getModel('feedbackcompany/api')->sendInvitation($order);
-					endif;
-				endif;
-			endif;
-		endif;
+					}
+				}
+			}
+		}
 	}
 
 	public function processFeedbackInvitationcall($observer) 
 	{
 		$order = $observer->getEvent()->getOrder();
-		if((Mage::getStoreConfig('feedbackcompany/invitation/enabled', $order->getStoreId())) && (Mage::getStoreConfig('feedbackcompany/invitation/connector', $order->getStoreId()))):
-			if($order->getStatus() == Mage::getStoreConfig('feedbackcompany/invitation/status', $order->getStoreId())):
-				if(!$order->getFeedbackSent()):
-					if(Mage::getStoreConfig('feedbackcompany/invitation/backlog', $order->getStoreId()) > 0):
+		if((Mage::getStoreConfig('feedbackcompany/invitation/enabled', $order->getStoreId())) && (Mage::getStoreConfig('feedbackcompany/invitation/connector', $order->getStoreId()))) {
+			if($order->getStatus() == Mage::getStoreConfig('feedbackcompany/invitation/status', $order->getStoreId())) {
+				if(!$order->getFeedbackSent()) {
+					if(Mage::getStoreConfig('feedbackcompany/invitation/backlog', $order->getStoreId()) > 0) {
 						$date_diff = floor(time() - strtotime($order->getCreatedAt()))/(60*60*24);
-						if($date_diff < Mage::getStoreConfig('feedbackcompany/invitation/backlog', $order->getStoreId())):
+						if($date_diff < Mage::getStoreConfig('feedbackcompany/invitation/backlog', $order->getStoreId())) {
 							$value = Mage::getModel('feedbackcompany/api')->sendInvitation($order);
-						endif;
-					else:
+						}
+					} else {
 						Mage::getModel('feedbackcompany/api')->sendInvitation($order);
-					endif;
-				endif;
-			endif;
-		endif;
+					}
+				}
+			}
+		}
 	}
-
 
 	public function addExportOption($observer) 
 	{
@@ -169,6 +157,6 @@ class Magmodules_Feedbackcompany_Model_Observer {
 				'url' => Mage::app()->getStore()->getUrl('*/feedbackreviews/exportcsv/filter/' . $request->getParam('filter')),
 			));
         }
-   }
+	}
 
 }

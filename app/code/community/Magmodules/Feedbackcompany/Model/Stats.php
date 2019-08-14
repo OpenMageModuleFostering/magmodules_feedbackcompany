@@ -27,54 +27,55 @@ class Magmodules_Feedbackcompany_Model_Stats extends Mage_Core_Model_Abstract {
 		$this->_init('feedbackcompany/stats');
 	}
 
-	public function processFeed($feed, $storeid = 0) 
+	public function processFeed($feed, $storeId = 0) 
 	{
-		$shop_id = Mage::getStoreConfig('feedbackcompany/general/api_id', $storeid);
-		$company = Mage::getStoreConfig('feedbackcompany/general/company', $storeid);
-
-		if($storeid == 0) {
-			$config = new Mage_Core_Model_Config();
-			$config->saveConfig('feedbackcompany/general/url', $feed->detailslink, 'default', $storeid);
-		} else {
-			$config = new Mage_Core_Model_Config();
-			$config->saveConfig('feedbackcompany/general/url', $feed->detailslink, 'stores', $storeid);
-			if(!Mage::getStoreConfig('feedbackcompany/general/url', 0)) {		
-				$config->saveConfig('feedbackcompany/general/url', $feed->detailslink, 'default', 0);
-			}
-		}
-
-		if($feed->noReviews > 0) {
-			$score = floatval($feed->score);
-			$score = ($score * 10);
-			$scoremax = ($feed->scoremax * 10);
-			$votes = $feed->noReviews;
-
-			// Check for update or save
-			if($indatabase = $this->loadbyShopId($shop_id)) {
-				$id = $indatabase->getId();
+		$result = array();
+		$shop_id = Mage::getStoreConfig('feedbackcompany/general/api_id', $storeId);
+		$company = Mage::getStoreConfig('feedbackcompany/general/company', $storeId);
+			
+		if (!empty($feed->detailslink)) {
+			if ($storeId == 0) {
+				$config = new Mage_Core_Model_Config();
+				$config->saveConfig('feedbackcompany/general/url', $feed->detailslink, 'default', $storeId);
 			} else {
-				$id = '';
+				$config = new Mage_Core_Model_Config();
+				$config->saveConfig('feedbackcompany/general/url', $feed->detailslink, 'stores', $storeId);
+				if(!Mage::getStoreConfig('feedbackcompany/general/url', 0)) {		
+					$config->saveConfig('feedbackcompany/general/url', $feed->detailslink, 'default', 0);
+				}
 			}
+			if ($feed->noReviews > 0) {
+				$id = $this->loadbyShopId($shop_id)->getId();
+				$score = floatval($feed->score);
+				$score = ($score * 10);
+				$scoremax = ($feed->scoremax * 10);
+				$votes = $feed->noReviews;
 
-			// Save Review Stats
-			$model = Mage::getModel('feedbackcompany/stats');
-			$model->setId($id)
-				->setShopId($shop_id)
-				->setCompany($company)
-				->setScore($score)
-				->setScoremax($scoremax)
-				->setVotes($votes)
-				->save();
-			return true;
-		} else {
-			return false;
+				$this->setId($id)
+					->setShopId($shop_id)
+					->setCompany($company)
+					->setScore($score)
+					->setScoremax($scoremax)
+					->setVotes($votes)
+					->save();
+				
+				$result['status'] = 'success';
+				$result['company'] = $company;
+				$result['score'] = $score;				
+			}
+		} else {		
+			$result['status'] = 'error';
+			$result['msg'] = Mage::helper('core/string')->truncate(strip_tags($feed), '500');
 		}
+
+		return $result;
 	}
 
 	public function processOverall() 
 	{
 		$stats = Mage::getModel('feedbackcompany/stats')->getCollection();
 		$stats->addFieldToFilter('shop_id', array('neq' => '0'));
+		$id = $this->loadbyShopId(0)->getId();
 
 		$score = '';
 		$scoremax = '';
@@ -93,12 +94,6 @@ class Magmodules_Feedbackcompany_Model_Stats extends Mage_Core_Model_Abstract {
 			$scoremax = ($scoremax / $i); 
 			$company = 'Overall';
 		}	
-
-		if($indatabase = $this->loadbyShopId(0)) {
-			$id = $indatabase->getId();
-		} else {
-			$id = '';
-		}
 
 		$model = Mage::getModel('feedbackcompany/stats')
 			->setId($id)

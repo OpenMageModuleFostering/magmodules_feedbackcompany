@@ -35,37 +35,66 @@ class Magmodules_Feedbackcompany_Model_Reviews extends Mage_Core_Model_Abstract 
 		$api_id	= Mage::getStoreConfig('feedbackcompany/general/api_id', $storeid);
 		$company = Mage::getStoreConfig('feedbackcompany/general/company', $storeid);	
 
-		foreach($feed->reviewDetails->reviewDetail as $review) {
+		if (!empty($feed->detailslink)) {
+			foreach($feed->reviewDetails->reviewDetail as $review) {
 			
-			$feedback_id = $review->id;
-			$score = ($review->score / 2);
-			$score_max = ($review->scoremax / 2);
-			$review_text = $review->text;
-			$score_aftersales = ($review->score_aftersales / 2);
-			$score_checkout = ($review->score_bestelgemak / 2);
-			$score_information = ($review->score_informatievoorziening / 2);
-			$score_friendly = ($review->score_klantvriendelijk / 2);
-			$score_leadtime = ($review->score_levertijd / 2);
-			$score_responsetime = ($review->score_reactiesnelheid / 2);
-			$score_order = ($review->score_orderverloop / 2);
-			$customer_name = $review->user;
-			$customer_recommend = $review->beveeltAan;
-			$customer_active = $review->kooptvakeronline;
-			$customer_sex = $review->geslacht;
-			$customer_age = $review->leeftijd;
-			$purchased_products = $review->gekochtproduct;
-			$text_positive = $review->sterkepunten;
-			$text_improvements = $review->verbeterpunten;
-			$company_response = $review->companyResponse;
-			$date_created = $review->createdate;
-			$date_created = substr($date_created, 0, 4) . '/' . substr($date_created, 4, 2) . '/' . substr($date_created, 6, 2);						
-			$indatabase = $this->getCollection()->addFieldToFilter('feedback_id', $feedback_id)->getFirstItem();
+				$feedback_id = $review->id;
+				$score = ($review->score / 2);
+				$score_max = ($review->scoremax / 2);
+				$review_text = $review->text;
+				$score_aftersales = ($review->score_aftersales / 2);
+				$score_checkout = ($review->score_bestelgemak / 2);
+				$score_information = ($review->score_informatievoorziening / 2);
+				$score_friendly = ($review->score_klantvriendelijk / 2);
+				$score_leadtime = ($review->score_levertijd / 2);
+				$score_responsetime = ($review->score_reactiesnelheid / 2);
+				$score_order = ($review->score_orderverloop / 2);
+				$customer_name = $review->user;
+				$customer_recommend = $review->beveeltAan;
+				$customer_active = $review->kooptvakeronline;
+				$customer_sex = $review->geslacht;
+				$customer_age = $review->leeftijd;
+				$purchased_products = $review->gekochtproduct;
+				$text_positive = $review->sterkepunten;
+				$text_improvements = $review->verbeterpunten;
+				$company_response = $review->companyResponse;
+				$date_created = $review->createdate;
+				$date_created = substr($date_created, 0, 4) . '/' . substr($date_created, 4, 2) . '/' . substr($date_created, 6, 2);						
+				$indatabase = $this->getCollection()->addFieldToFilter('feedback_id', $feedback_id)->getFirstItem();
 			
-			if($indatabase->getReviewId()) {
-				if(($type == 'history') || ($type == 'all')) {
+				if($indatabase->getReviewId()) {
+					if(($type == 'history') || ($type == 'all')) {
+						$reviews = Mage::getModel('feedbackcompany/reviews');
+						$reviews->setReviewId($indatabase->getReviewId())
+								->setShopId($api_id)
+								->setCompany($company)
+								->setFeedbackId($feedback_id)
+								->setReviewText($review_text)
+								->setScore($score)
+								->setScoreMax($score_max)
+								->setScoreAftersales($score_aftersales)
+								->setScoreCheckout($score_checkout)
+								->setScoreInformation($score_information)
+								->setScoreFriendly($score_friendly)
+								->setScoreLeadtime($score_leadtime)
+								->setScoreResponsetime($score_responsetime)
+								->setScoreOrder($score_order)
+								->setCustomerName($customer_name)
+								->setCustomerRecommend($customer_recommend)
+								->setCustomerActive($customer_active)
+								->setCustomerSex($customer_sex)
+								->setCustomerAge($customer_age)
+								->setPurchasedProducts($purchased_products)
+								->setTextPositive($text_positive)
+								->setTextImprovements($text_improvements)
+								->setCompanyResponse($company_response)							
+								->setDateCreated($date_created)
+								->save();
+						$updates++;
+					} 
+				} else {
 					$reviews = Mage::getModel('feedbackcompany/reviews');
-					$reviews->setReviewId($indatabase->getReviewId())
-							->setShopId($api_id)
+					$reviews->setShopId($api_id)
 							->setCompany($company)
 							->setFeedbackId($feedback_id)
 							->setReviewText($review_text)
@@ -86,48 +115,29 @@ class Magmodules_Feedbackcompany_Model_Reviews extends Mage_Core_Model_Abstract 
 							->setPurchasedProducts($purchased_products)
 							->setTextPositive($text_positive)
 							->setTextImprovements($text_improvements)
-							->setCompanyResponse($company_response)							
+							->setCompanyResponse($company_response)						
 							->setDateCreated($date_created)
 							->save();
-					$updates++;
-				} 
-			} else {
-				$reviews = Mage::getModel('feedbackcompany/reviews');
-				$reviews->setShopId($api_id)
-						->setCompany($company)
-						->setFeedbackId($feedback_id)
-						->setReviewText($review_text)
-						->setScore($score)
-						->setScoreMax($score_max)
-						->setScoreAftersales($score_aftersales)
-						->setScoreCheckout($score_checkout)
-						->setScoreInformation($score_information)
-						->setScoreFriendly($score_friendly)
-						->setScoreLeadtime($score_leadtime)
-						->setScoreResponsetime($score_responsetime)
-						->setScoreOrder($score_order)
-						->setCustomerName($customer_name)
-						->setCustomerRecommend($customer_recommend)
-						->setCustomerActive($customer_active)
-						->setCustomerSex($customer_sex)
-						->setCustomerAge($customer_age)
-						->setPurchasedProducts($purchased_products)
-						->setTextPositive($text_positive)
-						->setTextImprovements($text_improvements)
-						->setCompanyResponse($company_response)						
-						->setDateCreated($date_created)
-						->save();
-				$new++;
+					$new++;
+				}
 			}
-		}
 
-		$config = new Mage_Core_Model_Config();
-		$config->saveConfig('feedbackcompany/reviews/lastrun', now(), 'default', 0);
-		$result = array();
-		$result['review_updates'] = $updates; 
-		$result['review_new'] = $new; 
-		$result['company'] = $company;
-		return $result; 
+			$config = new Mage_Core_Model_Config();
+			$config->saveConfig('feedbackcompany/reviews/lastrun', now(), 'default', 0);
+
+			$result = array();
+			$result['review_updates'] = $updates; 
+			$result['review_new'] = $new; 
+			$result['company'] = $company;
+			return $result; 
+			
+		} else {
+			$result = array();
+			$result['review_updates'] = 0; 
+			$result['review_new'] = 0; 
+			$result['company'] = '';			
+			return $result; 
+		}
 	}
 			
 	public function flushCache() 

@@ -32,20 +32,17 @@ class Magmodules_Feedbackcompany_Block_Adminhtml_Widget_Info_Info extends Mage_A
 					<p>We are a Magento only E-commerce Agency located in the Netherlands.<br>
                     <br />
                     <table width="500px" border="0">
-						<tr>
+					<tr>
 							<td width="58%">View more extensions from us:</td>
 							<td width="42%"><a href="http://www.magentocommerce.com/magento-connect/developer/Magmodules" target="_blank">Magento Connect</a></td>
 						</tr>
-							<td>Send us an E-mail:
-							<td><a href="mailto:info@magmodules.eu">info@magmodules.eu</a></td>
+						<tr>
+							<td>For Help:</td>
+							<td><a href="https://www.magmodules.eu/support.html?ext=feedbackcompany">Visit our Support Page</a></td>
 						</tr>
 						<tr>
 							<td height="30">Visit our website:</td>
 							<td><a href="http://www.magmodules.eu" target="_blank">www.magmodules.eu</a></td>
-						</tr>
-						<tr>
-							<td>&nbsp;</td>
-							<td>&nbsp;</td>
 						</tr>
 						<tr>
 							<td height="30"><strong>Need help?</strong></td>

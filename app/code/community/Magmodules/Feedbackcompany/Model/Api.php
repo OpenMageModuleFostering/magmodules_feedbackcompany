@@ -21,30 +21,29 @@
  
 class Magmodules_Feedbackcompany_Model_Api extends Mage_Core_Model_Abstract {
 
-	public function processFeed($storeid = 0, $type) 
+	public function processFeed($storeId = 0, $type) 
 	{
-		if($feed = $this->getFeed($storeid, $type)) {
-			$results = Mage::getModel('feedbackcompany/reviews')->processFeed($feed, $storeid, $type);
-			$results['stats'] = Mage::getModel('feedbackcompany/stats')->processFeed($feed, $storeid);
+		if($feed = $this->getFeed($storeId, $type)) {
+			$results = Mage::getModel('feedbackcompany/reviews')->processFeed($feed, $storeId, $type);
+			$results['stats'] = Mage::getModel('feedbackcompany/stats')->processFeed($feed, $storeId);
 			return $results;
 		}
 		return false;
 	}
 
-	public function getFeed($storeid, $type = '', $interval = '') 
+	public function getFeed($storeId, $type = '', $interval = '') 
 	{
 		if($type == 'productreviews') {			
 			$result = array();
-			$client_token = Mage::getStoreConfig('feedbackcompany/productreviews/client_token', $storeid);			
+			$client_token = Mage::helper('feedbackcompany')->getUncachedConfigValue('feedbackcompany/productreviews/client_token', $storeId);
 			if(!$client_token) {
-				$client_token = $this->getOauthToken($storeid);
+				$client_token = $this->getOauthToken($storeId);
 				if($client_token['status'] == 'ERROR') {
 					return $client_token;
 				} else {
 					$client_token = $client_token['client_token'];
 				}
 			}	
-			
 			$request = curl_init();
 			curl_setopt($request, CURLOPT_SSL_VERIFYPEER, false);		
 			curl_setopt($request, CURLOPT_URL, 'https://beoordelingen.feedbackcompany.nl/api/v1/review/getrecent/?interval=' . $interval . '&type=product&unixts=1');
@@ -60,8 +59,7 @@ class Magmodules_Feedbackcompany_Model_Api extends Mage_Core_Model_Abstract {
 					}
 				}	
 				$config = new Mage_Core_Model_Config();
-				$config->saveConfig('feedbackcompany/productreviews/client_token', '', 'stores', $storeid);	
-				Mage::app()->getCacheInstance()->cleanType('config');
+				$config->saveConfig('feedbackcompany/productreviews/client_token', '', 'stores', $storeId);	
 				$result['status'] = 'ERROR';
 				$result['error'] = $api_result->error;
 				return $result;
@@ -71,7 +69,7 @@ class Magmodules_Feedbackcompany_Model_Api extends Mage_Core_Model_Abstract {
 				return $result;		
 			}
 		} else {
-			$api_id	= trim(Mage::getStoreConfig('feedbackcompany/general/api_id', $storeid));
+			$api_id	= trim(Mage::getStoreConfig('feedbackcompany/general/api_id', $storeId));
 			if($type == 'stats') {		
 				$api_url = 'https://beoordelingen.feedbackcompany.nl/samenvoordeel/scripts/flexreview/getreviewxml.cfm?ws=' . $api_id . '&publishDetails=0&nor=0&Basescore=10';
 			} 
@@ -291,11 +289,10 @@ class Magmodules_Feedbackcompany_Model_Api extends Mage_Core_Model_Abstract {
 		}
 	}
 
-	public function getOauthToken($storeid) 
+	public function getOauthToken($storeId) 
 	{
-		$client_id = Mage::getStoreConfig('feedbackcompany/productreviews/client_id', $storeid);			
-		$client_secret = Mage::getStoreConfig('feedbackcompany/productreviews/client_secret', $storeid);			
-		$result = array();
+		$client_id = Mage::getStoreConfig('feedbackcompany/productreviews/client_id', $storeId);			
+		$client_secret = Mage::getStoreConfig('feedbackcompany/productreviews/client_secret', $storeId);			
 		if(!empty($client_id) && !empty($client_secret)) {
 			$url = "https://beoordelingen.feedbackcompany.nl/api/v1/oauth2/token";
 			$get_array = array("client_id" => $client_id, "client_secret" => $client_secret, "grant_type" => "authorization_code");			  
@@ -310,12 +307,11 @@ class Magmodules_Feedbackcompany_Model_Api extends Mage_Core_Model_Abstract {
 			curl_close($feedbackconnect);			
 			$response = json_decode($response);
 			if(isset($response->access_token)) {
-				$store_ids = Mage::getModel('feedbackcompany/productreviews')->getAllStoreViews($storeid);
+				$store_ids = Mage::getModel('feedbackcompany/productreviews')->getAllStoreViews($storeId);
 				$config = new Mage_Core_Model_Config();
 				foreach($store_ids as $store_id) {
 					$config->saveConfig('feedbackcompany/productreviews/client_token', $response->access_token, 'stores', $store_id);	
 				}
-				Mage::app()->getCacheInstance()->cleanType('config');
 				$result = array();
 				$result['status'] = 'OK';
 				$result['client_token'] = $response->access_token;

@@ -152,6 +152,7 @@
 "View all reviews","Bekijk alle beoordelingen"
 "Write review","Schrijf beoordeling"
 "Webwinkel ID %s: no updates found, feed is empty or not found!","Webwinkel ID %s: geen updates gevonden, feed is leeg of niet beschikbaar."
+"Webwinkel ID %s: Maximum number of requests reached per hour, wait a bit before sending any new requests.","Webwinkel ID %s: Het maximale aantal verzoeken per uur is bereikt, probeer het later nog eens."
 "You can find this information in your The Feedback Company account","U kunt deze informatie terugvinden in uw The Feedback Company account"
 "You can only activate the Rich Snippets when this block is shown on your Homepage only","U kunt deze optie enkel activeren wanneer de sidebar op de homepage wordt vertoond. Indien u ook gebruikt maakt van de homepage widget dan raden wij u aan deze optie uit te schakelen om dubbele Rich Snippets te voorkomen."
 "You can invite your customers to write customer reviews.","Het is mogelijk om automatisch een herinnering te sturen naar uw klanten voor het schrijven van een beoordeling.<br><br>"
@@ -201,4 +202,3 @@
 "Header Block","Header Blok"
 "Please select specific storeview in the grid before exporting the reviews.","Selecteer een specifieke storeview in de grid om de product beoordelingen te exporteren."
 "Error, could not export the csv file.","Fout, het CSV bestand kan niet worden gegenereerd."
-"

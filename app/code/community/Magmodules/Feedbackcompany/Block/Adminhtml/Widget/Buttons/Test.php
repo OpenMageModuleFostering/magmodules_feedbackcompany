@@ -15,14 +15,13 @@
  * @category	Magmodules
  * @package		Magmodules_Feedbackcompany
  * @author		Magmodules <info@magmodules.eu)
- * @copyright	Copyright (c) 2016 (http://www.magmodules.eu)
+ * @copyright	Copyright (c) 2015 (http://www.magmodules.eu)
  * @license		http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
  
 class Magmodules_Feedbackcompany_Block_Adminhtml_Widget_Buttons_Test extends Mage_Adminhtml_Block_System_Config_Form_Field {
  
-	protected function _getElementHtml(Varien_Data_Form_Element_Abstract $element) 
-	{
+	protected function _getElementHtml(Varien_Data_Form_Element_Abstract $element) {
 		$this->setElement($element);
 		$url = $this->getUrl('*/feedbackreviews/testapi');
 		$html = $this->getLayout()->createBlock('adminhtml/widget_button')

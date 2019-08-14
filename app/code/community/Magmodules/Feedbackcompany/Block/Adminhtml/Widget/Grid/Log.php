@@ -23,8 +23,8 @@ class Magmodules_Feedbackcompany_Block_Adminhtml_Widget_Grid_Log extends Mage_Ad
 
 	public function render(Varien_Object $row) 
 	{
-		$type = $row->getType();
 		$msg = '';
+		$type = $row->getType();
 
 		if($type == 'reviews') {
 			$updates = '';
@@ -43,6 +43,11 @@ class Magmodules_Feedbackcompany_Block_Adminhtml_Widget_Grid_Log extends Mage_Ad
 				$msg .= ' & ';
 			}	
 			$msg .= Mage::helper('feedbackcompany')->__('total score updated');
+			
+			if(!empty($row->getResponse())) {
+				$msg = $row->getResponse();
+			}
+			
 		}
 
 		if($type == 'productreviews') {

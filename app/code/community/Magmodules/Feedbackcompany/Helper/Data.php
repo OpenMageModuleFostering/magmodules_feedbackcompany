@@ -244,5 +244,16 @@ class Magmodules_Feedbackcompany_Helper_Data extends Mage_Core_Helper_Abstract {
 		}
 		return $scoreValues;
 	}	
-	
+
+	public function getUncachedConfigValue($path, $storeId = 0) 
+	{
+		$collection = Mage::getModel('core/config_data')->getCollection()->addFieldToFilter('path', $path);		
+		if($storeId == 0) {
+			$collection = $collection->addFieldToFilter('scope_id', 0)->addFieldToFilter('scope', 'default');
+		} else {
+			$collection = $collection->addFieldToFilter('scope_id', $storeId)->addFieldToFilter('scope', 'stores');		
+		}
+		return $collection->getFirstItem()->getValue();			
+	}
+		
 }

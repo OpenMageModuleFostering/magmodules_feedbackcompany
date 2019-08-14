@@ -66,18 +66,15 @@ class Magmodules_Feedbackcompany_Block_Custom extends Mage_Core_Block_Template {
 			}  
 		}
 		
-		if($blockTypeTemplate) {	
-
+		if ($blockTypeTemplate) {	
 			$storeId = Mage::app()->getStore()->getStoreId();
-
 			$this->addData(array(
-				'cache_lifetime'    => 0,
+				'cache_lifetime'    => 7200,
 				'cache_tags'        => array(Mage_Cms_Model_Block::CACHE_TAG, Magmodules_Feedbackcompany_Model_Reviews::CACHE_TAG),
 				'cache_key'         => $storeId . '-' . $blockType . '-feedback-block',       
 			));
-
 	        parent::_construct();                                   
-    	    $this->setTemplate($blockTypeTemplate);		
+    	    $this->setTemplate($blockTypeTemplate);
     	} 
     }
   

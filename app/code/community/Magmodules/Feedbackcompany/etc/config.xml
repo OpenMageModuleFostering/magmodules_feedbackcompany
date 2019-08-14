@@ -23,7 +23,7 @@
 <config>
 	<modules>
 		<Magmodules_Feedbackcompany>
-			<version>1.4.8</version>
+			<version>1.4.9</version>
 		</Magmodules_Feedbackcompany>
 	</modules>
 	<global>
@@ -201,7 +201,7 @@
 			</general>
 			<reviews>
 				<cron>0</cron>
-				<cron_stats>*/15 * * * *</cron_stats>
+				<cron_stats>* * * * *</cron_stats>
 				<cron_reviews>0 8,20 * * *</cron_reviews>
 				<cron_all>0 2 1 * *</cron_all>
 			</reviews>	

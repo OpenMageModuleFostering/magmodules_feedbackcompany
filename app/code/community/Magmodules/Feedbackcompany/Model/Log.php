@@ -27,18 +27,18 @@ class Magmodules_Feedbackcompany_Model_Log extends Mage_Core_Model_Abstract {
 		$this->_init('feedbackcompany/log');
 	}
 
-	public function addToLog($type, $storeid, $review = '', $inivation = '', $time, $crontype = '', $api_url = '', $orderid = '') 
+	public function addToLog($type, $storeId, $review = '', $response = '', $time, $crontype = '', $api_url = '', $orderId = '') 
 	{
 		if(Mage::getStoreConfig('feedbackcompany/log/enabled')) {
 			
 			if($type == 'productreview') {
-				$api_id	= Mage::getStoreConfig('feedbackcompany/productreviews/client_token', $storeid);
-				$api_url = Mage::getStoreConfig('feedbackcompany/productreviews/client_token', $storeid);
+				$api_id	= Mage::getStoreConfig('feedbackcompany/productreviews/client_token', $storeId);
+				$api_url = Mage::getStoreConfig('feedbackcompany/productreviews/client_token', $storeId);
 			} else {
-				$api_id	= Mage::getStoreConfig('feedbackcompany/general/api_id', $storeid);		
+				$api_id	= Mage::getStoreConfig('feedbackcompany/general/api_id', $storeId);		
 			}
 			
-			$company = Mage::getStoreConfig('feedbackcompany/general/company', $storeid);
+			$company = Mage::getStoreConfig('feedbackcompany/general/company', $storeId);
 			$review_updates	= '';
 			$review_new	= '';
 
@@ -48,23 +48,26 @@ class Magmodules_Feedbackcompany_Model_Log extends Mage_Core_Model_Abstract {
 				}	
 				if(!empty($review['review_new'])) {
 					$review_new	= $review['review_new'];
-				}	
+				}
+				if(!empty($review['stats']['msg'])) {
+					$response = $review['stats']['msg'];
+				}				
 			}
 
 			$model = Mage::getModel('feedbackcompany/log');
 			$model->setType($type)
-					->setShopId($api_id)
-					->setStoreId($storeid)
-					->setCompany($company)
-					->setReviewUpdate($review_updates)
-					->setReviewNew($review_new)
-					->setResponse($inivation)
-					->setOrderId($orderid)
-					->setCron($crontype)
-					->setDate(now())
-					->setTime($time)
-					->setApiUrl($api_url)
-					->save();
+				->setShopId($api_id)
+				->setStoreId($storeId)
+				->setCompany($company)
+				->setReviewUpdate($review_updates)
+				->setReviewNew($review_new)
+				->setResponse($response)
+				->setOrderId($orderId)
+				->setCron($crontype)
+				->setDate(now())
+				->setTime($time)
+				->setApiUrl($api_url)
+				->save();
 		}
 	}
 
