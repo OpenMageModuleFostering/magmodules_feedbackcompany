@@ -85,7 +85,7 @@ class Magmodules_Feedbackcompany_Model_Productreviews extends Mage_Core_Model_Ab
 		$string = str_replace(" ?","?",$string);
 		$string = str_replace(" !","!",$string);
 		preg_match('/^.*[^\s](\.|\?|\!)/U', $string, $match);
-		if(strlen($match[0]) > 0) {
+		if(!empty($match[0])) {
 			return $match[0]; 
 		} else {
 			return Mage::helper('core/string')->truncate($string, 50) . '...';		

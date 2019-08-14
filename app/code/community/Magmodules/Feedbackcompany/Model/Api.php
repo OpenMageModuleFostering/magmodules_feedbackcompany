@@ -51,20 +51,20 @@ class Magmodules_Feedbackcompany_Model_Api extends Mage_Core_Model_Abstract {
 			curl_setopt($request, CURLOPT_HTTPHEADER, array('Authorization: Bearer ' . $client_token));
 			curl_setopt($request, CURLOPT_RETURNTRANSFER, true);
 			$api_result = json_decode($content = curl_exec($request));
-			
 			if($api_result) {			
-				if($api_result->message == 'OK') {
-					$result['status'] = 'OK';
-					$result['feed'] = $api_result->data[0];
-					return $result;
-				} else {
-					$config = new Mage_Core_Model_Config();
-					$config->saveConfig('feedbackcompany/productreviews/client_token', '', 'stores', $storeid);	
-					Mage::app()->getCacheInstance()->cleanType('config');
-					$result['status'] = 'ERROR';
-					$result['error'] = $api_result->error;
-					return $result;
-				}
+				if(isset($api_result->message)) {
+					if($api_result->message == 'OK') {
+						$result['status'] = 'OK';
+						$result['feed'] = $api_result->data[0];
+						return $result;
+					}
+				}	
+				$config = new Mage_Core_Model_Config();
+				$config->saveConfig('feedbackcompany/productreviews/client_token', '', 'stores', $storeid);	
+				Mage::app()->getCacheInstance()->cleanType('config');
+				$result['status'] = 'ERROR';
+				$result['error'] = $api_result->error;
+				return $result;
 			} else {
 				$result['status'] = 'ERROR';
 				$result['error'] = Mage::helper('feedbackcompany')->__('Error connect to the API.');
@@ -83,7 +83,6 @@ class Magmodules_Feedbackcompany_Model_Api extends Mage_Core_Model_Abstract {
 			}
 						
 			if($api_id) {
-				echo $api_url; exit;
 				$xml = simplexml_load_file($api_url);	
 				if($xml) {
 					return $xml;
