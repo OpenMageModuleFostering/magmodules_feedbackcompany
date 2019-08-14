@@ -162,7 +162,7 @@ class Magmodules_Feedbackcompany_Model_Api extends Mage_Core_Model_Abstract {
 							}
 							$request[$var_url] = urlencode($deeplink); 
 							$request[$var_text] = urlencode(trim($product->getName())); 
-							$request[$var_id] = urlencode('SKU=' . trim($item->getSku())); 
+							$request[$var_id] = urlencode('SKU=' . trim($product->getSku())); 
 							$request[$var_photo] = urlencode($image_url); 
 							$i++;
 						}	

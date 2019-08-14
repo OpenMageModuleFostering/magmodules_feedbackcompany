@@ -47,8 +47,14 @@
 
 /** Continuous stars **/
 
+
+.feedbackcompany-small-widget .rating-box {height: 21px;background: url('./images/stars-colorful-small-empty.png') no-repeat !important;margin: 5px 0px 0px;width: 75px;}
+.feedbackcompany-small-widget .rating {display: block;height: 21px;background: url('./images/stars-colorful-small-filling.png') no-repeat !important;}
+.feedbackcompany-small-widget .feedbackcompany-small-text {padding: 5px 0px 0px 0px;}
+
+
 .feedbackcompany-medium-widget .rating-box { height: 21px; background: url('./images/stars-colorful-big-empty.png') no-repeat;margin: 10px 0px 5px;width: 110px;}
-.feedbackcompany-medium-widget .rating { display: block; height: 21px;background: url('./images/stars-colorful-big-filling.png') no-repeat;}
+.feedbackcompany-medium-widget .rating {display: block;height: 21px;background: url('./images/stars-colorful-big-filling.png') no-repeat !important;}
 .feedbackcompany-medium-widget .feedbackcompany-small-text { padding:4px 0px 0px 0px;}
 
 .feedbackcompany-small-score .rating-box { height: 21px; background: url('./images/stars-colorful-big-empty.png') no-repeat;margin: 5px 15px;width: 109px;float: left;}

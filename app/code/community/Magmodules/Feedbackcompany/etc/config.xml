@@ -23,7 +23,7 @@
 <config>
 	<modules>
 		<Magmodules_Feedbackcompany>
-			<version>1.4.7</version>
+			<version>1.4.8</version>
 		</Magmodules_Feedbackcompany>
 	</modules>
 	<global>
