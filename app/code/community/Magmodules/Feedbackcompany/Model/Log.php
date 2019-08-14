@@ -1,9 +1,8 @@
-<?php 
+<?php
 /**
  * Magmodules.eu - http://www.magmodules.eu
  *
  * NOTICE OF LICENSE
- *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -12,63 +11,54 @@
  * obtain it through the world-wide-web, please send an email
  * to info@magmodules.eu so we can send you a copy immediately.
  *
- * @category	Magmodules
- * @package		Magmodules_Feedbackcompany
- * @author		Magmodules <info@magmodules.eu)
- * @copyright	Copyright (c) 2016 (http://www.magmodules.eu)
- * @license		http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ * @category      Magmodules
+ * @package       Magmodules_Feedbackcompany
+ * @author        Magmodules <info@magmodules.eu>
+ * @copyright     Copyright (c) 2017 (http://www.magmodules.eu)
+ * @license       http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
- 
-class Magmodules_Feedbackcompany_Model_Log extends Mage_Core_Model_Abstract {
 
-	public function _construct() 
-	{
-		parent::_construct();
-		$this->_init('feedbackcompany/log');
-	}
+class Magmodules_Feedbackcompany_Model_Log extends Mage_Core_Model_Abstract
+{
 
-	public function addToLog($type, $storeId, $review = '', $response = '', $time, $crontype = '', $api_url = '', $orderId = '') 
-	{
-		if(Mage::getStoreConfig('feedbackcompany/log/enabled')) {
-			
-			if($type == 'productreview') {
-				$api_id	= Mage::getStoreConfig('feedbackcompany/productreviews/client_token', $storeId);
-				$api_url = Mage::getStoreConfig('feedbackcompany/productreviews/client_token', $storeId);
-			} else {
-				$api_id	= Mage::getStoreConfig('feedbackcompany/general/api_id', $storeId);		
-			}
-			
-			$company = Mage::getStoreConfig('feedbackcompany/general/company', $storeId);
-			$review_updates	= '';
-			$review_new	= '';
+    /**
+     *
+     */
+    public function _construct()
+    {
+        parent::_construct();
+        $this->_init('feedbackcompany/log');
+    }
 
-			if($review) {
-				if(!empty($review['review_updates'])) {
-					$review_updates	= $review['review_updates'];
-				}	
-				if(!empty($review['review_new'])) {
-					$review_new	= $review['review_new'];
-				}
-				if(!empty($review['stats']['msg'])) {
-					$response = $review['stats']['msg'];
-				}				
-			}
-
-			$model = Mage::getModel('feedbackcompany/log');
-			$model->setType($type)
-				->setShopId($api_id)
-				->setStoreId($storeId)
-				->setCompany($company)
-				->setReviewUpdate($review_updates)
-				->setReviewNew($review_new)
-				->setResponse($response)
-				->setOrderId($orderId)
-				->setCron($crontype)
-				->setDate(now())
-				->setTime($time)
-				->setApiUrl($api_url)
-				->save();
-		}
-	}
+    /**
+     * @param        $type
+     * @param        $sId
+     * @param string $review
+     * @param string $res
+     * @param string $t
+     * @param string $cron
+     * @param string $aUrl
+     * @param string $oId
+     */
+    public function addToLog($type, $sId, $review = '', $res = '', $t = '', $cron = '', $aUrl = '', $oId = '') 
+    {
+        if (Mage::getStoreConfig('feedbackcompany/log/enabled')) {
+            $data = array(
+                'type'           => $type,
+                'shop_id'        => Mage::getModel('feedbackcompany/api')->getClientId($sId),
+                'store_id'       => $sId,
+                'company'        => isset($review['company']) ? $review['company'] : '',
+                'review_updates' => isset($review['update']) ? $review['update'] : '',
+                'review_new'     => isset($review['new']) ? $review['new'] : '',
+                'response'       => $res,
+                'order_id'       => $oId,
+                'cron'           => $cron,
+                'date'           => date('Y-m-d H:i:s'),
+                'time'           => isset($t) ? (microtime(true) - $t) : '',
+                'api_url'        => $aUrl
+            );
+            Mage::getModel('feedbackcompany/log')->setData($data)->save();
+        }
+    }
 
 }

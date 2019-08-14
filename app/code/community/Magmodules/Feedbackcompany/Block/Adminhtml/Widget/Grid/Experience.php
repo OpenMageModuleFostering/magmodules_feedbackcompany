@@ -18,16 +18,27 @@
  * @license       http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 
-class Magmodules_Feedbackcompany_Model_Mysql4_Log_Collection extends Mage_Core_Model_Mysql4_Collection_Abstract
+class Magmodules_Feedbackcompany_Block_Adminhtml_Widget_Grid_Experience
+    extends Mage_Adminhtml_Block_Widget_Grid_Column_Renderer_Abstract
 {
 
     /**
-     *
+     * @param Varien_Object $row
+     * @return string
      */
-    public function _construct()
+    public function render(Varien_Object $row)
     {
-        parent::_construct();
-        $this->_init('feedbackcompany/log');
+        $value = $row->getData($this->getColumn()->getIndex());
+        $charLimit = '100';
+        if (strlen($value) > $charLimit) {
+            $more = ' ... <a href="#" class="magtooltip" alt="">' . Mage::helper('feedbackcompany')->__('(more)');
+            $trucated = Mage::helper('core/string')->truncate($value, $charLimit, $more);
+            $content = $trucated . '<span>' . $value . '</span></a>';
+
+            return $content;
+        } else {
+            return $value;
+        }
     }
 
 }

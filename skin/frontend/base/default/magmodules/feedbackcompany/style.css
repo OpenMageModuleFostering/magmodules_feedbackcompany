@@ -1,9 +1,7 @@
-/**
- * Magmodules.eu
- * http://www.magmodules.eu
+/*
+ * Magmodules.eu - http://www.magmodules.eu
  *
  * NOTICE OF LICENSE
- *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -12,14 +10,14 @@
  * obtain it through the world-wide-web, please send an email
  * to info@magmodules.eu so we can send you a copy immediately.
  *
- * @category	Magmodules
- * @package		Magmodules_Feedbackcompany
- * @author		Magmodules <info@magmodules.eu)
- * @copyright	Copyright (c) 2014 (http://www.magmodules.eu)
- * @license		http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ * @category      Magmodules
+ * @package       Magmodules_Feedbackcompany
+ * @author        Magmodules <info@magmodules.eu>
+ * @copyright     Copyright (c) 2017 (http://www.magmodules.eu)
+ * @license       http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 
-.feedbackcompany .page-title .flexbox-container{
+.feedbackcompany .page-title .flexbox-container {
     display: flex;
     justify-content: space-between;
     align-items: baseline;
@@ -34,15 +32,16 @@
     border-bottom: none;
 }
 
-.feedbackcompany .flexbox-container .header-floating-feedbackcompany{
+.feedbackcompany .flexbox-container .header-floating-feedbackcompany {
     flex-shrink: 0;
 }
+
 .feedbackcompany .header-floating-feedbackcompany .button {
     padding: 0;
     vertical-align: text-bottom;
 }
 
-.feedbackcompany .header-floating-feedbackcompany .button span{
+.feedbackcompany .header-floating-feedbackcompany .button span {
     padding: 10px 45px 10px 41px;
     display: inline-block;
 }
@@ -53,29 +52,28 @@
     text-align: right;
 }
 
-.feedbackcompany .total-feedbackcompany.total-feedbackcompany-mobile{
+.feedbackcompany .total-feedbackcompany.total-feedbackcompany-mobile {
     display: block;
     text-align: center;
     margin: 40px 0 30px;
 }
 
-
-.feedbackcompany .total-feedbackcompany .total-block-stars, .feedbackcompany .total-feedbackcompany .total-block-stars-medium{
+.feedbackcompany .total-feedbackcompany .total-block-stars, .feedbackcompany .total-feedbackcompany .total-block-stars-medium {
     float: right;
     vertical-align: sub;
 }
 
-.feedbackcompany .total-feedbackcompany.total-feedbackcompany-mobile .button,.feedbackcompany .total-feedbackcompany.total-feedbackcompany-mobile .total-block-stars{
+.feedbackcompany .total-feedbackcompany.total-feedbackcompany-mobile .button, .feedbackcompany .total-feedbackcompany.total-feedbackcompany-mobile .total-block-stars {
     vertical-align: middle;
 }
 
-.feedbackcompany .total-feedbackcompany.total-feedbackcompany-mobile .total-block-stars{
+.feedbackcompany .total-feedbackcompany.total-feedbackcompany-mobile .total-block-stars {
     float: none;
     margin-top: -8px;
     display: inline-block;
 }
 
-.feedbackcompany .total-feedbackcompany .total-description{
+.feedbackcompany .total-feedbackcompany .total-description {
     text-transform: uppercase;
     font-size: 10px;
     line-height: 22px;
@@ -91,7 +89,7 @@
 .feedbackcompany .ratingblock-feedbackcompany {
     width: 60px;
     height: 60px;
-    padding: 4px 0px 0px 3px;
+    padding: 4px 0 0 3px;
     font-weight: bold;
     font-size: 13px;
     margin: 6px auto;
@@ -115,7 +113,7 @@
 
 .feedbackcompany .review-list h4 {
     font-size: 12px;
-    border-bottom: 1px solid #e0e0e0;
+    border-bottom: 1px solid #E0E0E0;
     padding: 6px 3px 10px;
 }
 
@@ -154,12 +152,12 @@
     font-weight: bold;
     clear: left;
     float: left;
-    width: 40%;
+    width: 50%;
 }
 
 .feedbackcompany dl dd {
     float: left;
-    width: 60%;
+    width: 50%;
 }
 
 .feedbackcompany .sprites-icon {
@@ -173,22 +171,11 @@
     vertical-align: middle;
 }
 
-@include bp(min-width, $bp-small) {
-  .feedbackcompany {
-    ul.summary-index {
-      display: inherit;
-      li {
-        display: inline-block;
-      }
-    }
-  }
-}
-
-@media (-webkit-min-device-pixel-ratio: 2), not all, not all, not all, (min-resolution: 192dpi), (min-resolution: 2dppx){
+@media (-webkit-min-device-pixel-ratio: 2), not all, not all, not all, (min-resolution: 192dpi), (min-resolution: 2dppx) {
     .feedbackcompany .sprites-icon {
         background: url('images/sprites@2x.png') center top no-repeat;
         background-size: 16px;
-        -webkit-transform: translate3d(0,0,0);
+        -webkit-transform: translate3d(0, 0, 0);
     }
 
 }
@@ -214,7 +201,7 @@
     margin: 23px 0 3em;
     border: 3px solid #C3C3C3;
     color: #333;
-    background: #fff;
+    background: #FFF;
     -webkit-border-radius: 10px;
     -moz-border-radius: 10px;
     border-radius: 10px;
@@ -240,7 +227,7 @@
     left: 47px;
     border-width: 13px 13px 0;
     border-style: solid;
-    border-color: #fff transparent;
+    border-color: #FFF transparent;
     display: block;
     width: 0;
 }
@@ -261,11 +248,12 @@
     border-width: 0 13px 13px;
 }
 
-@media only screen and (min-width: 600px){
-    .feedbackcompany .total-feedbackcompany.total-feedbackcompany-mobile{
+@media only screen and (min-width: 600px) {
+    .feedbackcompany .total-feedbackcompany.total-feedbackcompany-mobile {
         display: none;
     }
-    .feedbackcompany .total-feedbackcompany{
+
+    .feedbackcompany .total-feedbackcompany {
         display: inline-block;
     }
 
@@ -273,7 +261,6 @@
         vertical-align: text-bottom;
     }
 }
-
 
 @media only screen and (min-width: 771px) {
     .feedbackcompany .total-feedbackcompany {
@@ -298,7 +285,7 @@
     }
 
     .feedbackcompany dl {
-        padding-left: 0px;
+        padding-left: 0;
     }
 
     .feedbackcompany dl.dl-feedback {
@@ -306,7 +293,7 @@
     }
 
     .feedbackcompany dl.dl-feedback dt {
-        width: 16%;
+        width: 25%;
     }
 
     .feedbackcompany dl.dl-feedback .upper {
@@ -315,15 +302,15 @@
     }
 
     .feedbackcompany dl.dl-feedback dd {
-        width: 84%;
+        width: 75%;
     }
 
     .feedbackcompany dl.summary-index dt {
-        width: 32%;
+        width: 50%;
     }
 
     .feedbackcompany dl.summary-index dd {
-        width: 68%;
+        width: 50%;
     }
 
     .feedbackcompany .summary-index .column {

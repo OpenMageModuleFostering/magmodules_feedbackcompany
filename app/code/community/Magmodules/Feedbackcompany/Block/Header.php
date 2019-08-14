@@ -1,9 +1,9 @@
 <?php
+
 /**
  * Magmodules.eu - http://www.magmodules.eu
  *
  * NOTICE OF LICENSE
- *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -12,35 +12,46 @@
  * obtain it through the world-wide-web, please send an email
  * to info@magmodules.eu so we can send you a copy immediately.
  *
- * @category	Magmodules
- * @package		Magmodules_Feedbackcompany
- * @author		Magmodules <info@magmodules.eu)
- * @copyright	Copyright (c) 2016 (http://www.magmodules.eu)
- * @license		http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ * @category      Magmodules
+ * @package       Magmodules_Feedbackcompany
+ * @author        Magmodules <info@magmodules.eu>
+ * @copyright     Copyright (c) 2017 (http://www.magmodules.eu)
+ * @license       http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
+class Magmodules_Feedbackcompany_Block_Header extends Mage_Core_Block_Template
+{
 
-class Magmodules_Feedbackcompany_Block_Header extends Mage_Core_Block_Template {
-
-    protected function _construct() 
-    {  		
+    /**
+     *
+     */
+    protected function _construct()
+    {
         parent::_construct();
-		$total = $this->helper('feedbackcompany')->getTotalScore();
-		$enabled = $this->helper('feedbackcompany')->getBlockEnabled('header');
-		if($total && $enabled) {
-	        $this->setTotals($total);
-	        $blockTypeTemplate = 'magmodules/feedbackcompany/widget/header.phtml';
-    	    $this->setTemplate($blockTypeTemplate);	
-		}              
-	}
 
-    function getReviewsUrl() 
-    {    	
-		return $this->helper('feedbackcompany')->getReviewsUrl('header');	
-	}
+        $total = $this->helper('feedbackcompany')->getTotalScore();
+        $enabled = $this->helper('feedbackcompany')->getBlockEnabled('header');
 
-    public function getSnippetsEnabled() 
-    {    	
-		return $this->helper('feedbackcompany')->getSnippetsEnabled('header');	
-	}
-	
+        if ($total && $enabled) {
+            $this->setTotals($total);
+            $blockTypeTemplate = 'magmodules/feedbackcompany/widget/header.phtml';
+            $this->setTemplate($blockTypeTemplate);
+        }
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getReviewsUrl()
+    {
+        return $this->helper('feedbackcompany')->getReviewsUrl('header');
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSnippetsEnabled()
+    {
+        return $this->helper('feedbackcompany')->getSnippetsEnabled('header');
+    }
+
 }

@@ -1,9 +1,8 @@
-<?php 
+<?php
 /**
  * Magmodules.eu - http://www.magmodules.eu
  *
  * NOTICE OF LICENSE
- *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -12,22 +11,26 @@
  * obtain it through the world-wide-web, please send an email
  * to info@magmodules.eu so we can send you a copy immediately.
  *
- * @category	Magmodules
- * @package		Magmodules_Feedbackcompany
- * @author		Magmodules <info@magmodules.eu)
- * @copyright	Copyright (c) 2016 (http://www.magmodules.eu)
- * @license		http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ * @category      Magmodules
+ * @package       Magmodules_Feedbackcompany
+ * @author        Magmodules <info@magmodules.eu>
+ * @copyright     Copyright (c) 2017 (http://www.magmodules.eu)
+ * @license       http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 
-class Magmodules_Feedbackcompany_Model_System_Config_Source_Sidebarlink {
+class Magmodules_Feedbackcompany_Model_System_Config_Source_Sidebarlink
+{
 
-	public function toOptionArray() 
-	{
-		return array(
-			''			=> Mage::helper('feedbackcompany')->__('None'),
-			'external'	=> Mage::helper('feedbackcompany')->__('External (Feedbackcompany.nl)'),
-			'internal'	=> Mage::helper('feedbackcompany')->__('Internal (/feedbackcompany)'),
-		);
-	}
+    /**
+     * @return array
+     */
+    public function toOptionArray()
+    {
+        return array(
+            ''         => Mage::helper('feedbackcompany')->__('None'),
+            'external' => Mage::helper('feedbackcompany')->__('External (Feedbackcompany.nl)'),
+            'internal' => Mage::helper('feedbackcompany')->__('Internal (/feedbackcompany)'),
+        );
+    }
 
 }
