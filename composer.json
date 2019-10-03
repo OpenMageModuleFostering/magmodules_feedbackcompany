@@ -1,16 +1,19 @@
 {
-    "name": "OpenMageModuleFostering/Magmodules_Feedbackcompany",
+    "name": "OpenMageModuleFostering\/Magmodules_Feedbackcompany",
     "type": "magento-module",
     "license": "OSL-3.0",
     "homepage": "",
     "description": "Connect your Magento shop to The Feedback Company",
     "authors": [
-    {
-        "name": "Magmodules",
-        "email": "info@magmodules.nl"
-    }
-],
+        {
+            "name": "Magmodules",
+            "email": "info@magmodules.nl"
+        }
+    ],
     "suggest": {
-        "magento-hackathon/magento-composer-installer": "*"
-    }
+        "magento-hackathon\/magento-composer-installer": "*"
+    },
+    "keywords": [
+        "openmage-module"
+    ]
 }
